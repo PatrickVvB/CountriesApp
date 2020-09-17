@@ -8,8 +8,9 @@ import ru.test.countriesapp.R
 import ru.test.countriesapp.databinding.ItemCountryBinding
 import ru.test.countriesapp.db.model.Country
 
-class CountryRvAdapter(private val countries: ArrayList<Country>)
-    : RecyclerView.Adapter<CountryRvAdapter.VH>() {
+class CountryRvAdapter() : RecyclerView.Adapter<CountryRvAdapter.VH>() {
+
+    private var countries = emptyList<Country>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -17,14 +18,22 @@ class CountryRvAdapter(private val countries: ArrayList<Country>)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-
+        holder.bindUI(countries[position])
     }
 
     override fun getItemCount(): Int {
         return countries.size
     }
 
+    fun setCountryList(countries: ArrayList<Country>) {
+        this.countries = countries
+        notifyDataSetChanged()
+    }
+
     inner class VH(val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        fun bindUI(country: Country) {
+            binding.country = country
+        }
     }
 }

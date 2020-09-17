@@ -11,7 +11,7 @@ import ru.test.countriesapp.db.model.Country
 interface CountryDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertCountry(country: Country)
+    fun insertAllCountry(country: ArrayList<Country>)
 
     @Query("SELECT * FROM country WHERE name = :countryName")
     fun getCountryByName(countryName: String): LiveData<Country>

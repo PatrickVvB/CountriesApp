@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import ru.test.countriesapp.db.CountryDao
 import ru.test.countriesapp.db.model.Country
 
-class CountryRepository(private val countryDao: CountryDao) {
+class DatabaseRepository(private val countryDao: CountryDao) {
 
-    val allCountry: LiveData<ArrayList<Country>> = countryDao.getAllCountry()
+    val getAllCountry: LiveData<ArrayList<Country>> = countryDao.getAllCountry()
 
-    suspend fun insert(country: Country) {
-        countryDao.insertCountry(country)
+    suspend fun insert(country: ArrayList<Country>) {
+        countryDao.insertAllCountry(country)
     }
 
     suspend fun gerCountryByName(name: String): LiveData<Country> {
