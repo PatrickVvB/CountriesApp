@@ -13,6 +13,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         initToastObserver()
     }
 
+    //слушатель тоста
     private fun initToastObserver() {
         vm.toastObserver.observe(this, Observer {
             it?.let {

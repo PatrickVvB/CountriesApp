@@ -1,8 +1,13 @@
 package ru.test.countriesapp.db.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import ru.test.countriesapp.db.converters.CurrencyConverter
+import ru.test.countriesapp.db.converters.LanguageConverter
+import ru.test.countriesapp.db.converters.TimezoneConverter
 
 @Entity
 data class Country(
@@ -12,10 +17,15 @@ data class Country(
     @SerializedName("flag")
     val flag: String,
     @SerializedName("currencies")
+    @Embedded
+    @field:TypeConverters(CurrencyConverter::class)
     val currency: ArrayList<Currency>,
     @SerializedName("languages")
+    @Embedded
+    @field:TypeConverters(LanguageConverter::class)
     val language: ArrayList<Language>,
     @SerializedName("timezones")
+    @field:TypeConverters(TimezoneConverter::class)
     val timeZone: ArrayList<String>
 )
 

@@ -3,13 +3,18 @@ package ru.test.countriesapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import ru.test.countriesapp.R
 import ru.test.countriesapp.databinding.ItemCountryBinding
 import ru.test.countriesapp.db.model.Country
+import ru.test.countriesapp.ui.activity.MainActivity
+import ru.test.countriesapp.ui.fragment.CountryInfoFragment
+import ru.test.countriesapp.vm.CountryInfoViewModel
 
-class CountryRvAdapter() : RecyclerView.Adapter<CountryRvAdapter.VH>() {
+class CountryRvAdapter : RecyclerView.Adapter<CountryRvAdapter.VH>() {
 
+    //пустой список стран
     private var countries = emptyList<Country>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -25,6 +30,7 @@ class CountryRvAdapter() : RecyclerView.Adapter<CountryRvAdapter.VH>() {
         return countries.size
     }
 
+    //установка списка стран
     fun setCountryList(countries: ArrayList<Country>) {
         this.countries = countries
         notifyDataSetChanged()
@@ -34,6 +40,17 @@ class CountryRvAdapter() : RecyclerView.Adapter<CountryRvAdapter.VH>() {
 
         fun bindUI(country: Country) {
             binding.country = country
+
+            //переход в детальную информацию
+            binding.cvRoot.setOnClickListener {
+                val fragment = CountryInfoFragment()
+                val vm: CountryInfoViewModel =
+                    ViewModelProviders.of(binding.root.context as MainActivity)
+                        .get(CountryInfoViewModel::class.java)
+                vm.country.value = country
+                fragment.setVM(vm)
+                (binding.root.context as MainActivity).addFragment(fragment)
+            }
         }
     }
 }

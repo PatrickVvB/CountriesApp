@@ -1,6 +1,7 @@
 package ru.test.countriesapp.vm
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,22 +19,25 @@ class CountryListViewModel() : BaseViewModel() {
 
     private val countryDao = App.getDatabase().countryDao()
     private val databaseRep = DatabaseRepository(countryDao)
+    private val countryListRep = CountryListRepository()
+
+    //база данных
     val databaseCountries = databaseRep.getAllCountry
     val newCountryList = MutableLiveData<ArrayList<Country>>()
 
-    private val countryListRep = CountryListRepository()
+    //вставка списка стран
+    private fun insertCountry(country: ArrayList<Country>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseRep.insert(country)
+        }
+    }
 
-//    private fun insertCountry(country: ArrayList<Country>) {
-//        vmScope.launch {
-//            databaseRep.insert(country)
-//        }
-//    }
-
+    //загрузка списка стран
     fun getAllCountries() {
         vmScope.launch {
             val response = countryListRep.getAllCountries()
             if (response.code() < 400) {
-                databaseRep.insert(response.body()!!)//расчитывается что какие то данные ТОЧНО придут
+                insertCountry(response.body()!!)//расчитывается что какие то данные ТОЧНО придут
                 newCountryList.value = response.body()
             }
             else showToast("Возникли проблемы с загрузкой стран, повторите попытку позже")

@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
 
     val baseUrl = "https://restcountries.eu/rest/v2/"
-    val gson = GsonBuilder().setLenient().serializeNulls().create()
+    private val gson = GsonBuilder().setLenient().serializeNulls().create()
 
-    val httpClient = OkHttpClient.Builder()
+    private val httpClient = OkHttpClient.Builder()
         .connectTimeout(5, TimeUnit.SECONDS)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

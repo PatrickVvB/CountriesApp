@@ -11,11 +11,11 @@ import ru.test.countriesapp.db.model.Country
 interface CountryDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllCountry(country: ArrayList<Country>)
+    fun insertAllCountry(country: List<Country>)
 
     @Query("SELECT * FROM country WHERE name = :countryName")
     fun getCountryByName(countryName: String): LiveData<Country>
 
     @Query("SELECT * FROM country ORDER BY name ASC")
-    fun getAllCountry(): LiveData<ArrayList<Country>>
+    fun getAllCountry(): LiveData<List<Country>>
 }

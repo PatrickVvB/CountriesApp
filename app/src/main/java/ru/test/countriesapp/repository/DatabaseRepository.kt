@@ -6,12 +6,15 @@ import ru.test.countriesapp.db.model.Country
 
 class DatabaseRepository(private val countryDao: CountryDao) {
 
-    val getAllCountry: LiveData<ArrayList<Country>> = countryDao.getAllCountry()
+    //список стран в базе данных
+    val getAllCountry: LiveData<List<Country>> = countryDao.getAllCountry()
 
-    suspend fun insert(country: ArrayList<Country>) {
+    //вставка списка стран
+    suspend fun insert(country: List<Country>) {
         countryDao.insertAllCountry(country)
     }
 
+    //получить страну по имени
     suspend fun gerCountryByName(name: String): LiveData<Country> {
         return countryDao.getCountryByName(name)
     }

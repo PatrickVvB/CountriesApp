@@ -12,6 +12,7 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:padding="5dp"
+            android:background="@drawable/sh_country_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -19,8 +20,13 @@
 
         <TextView
             android:id="@+id/tv_btn_update_list"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:gravity="center"
+            android:background="@drawable/sh_update_button"
+            android:text="Обновить список"
+            android:textSize="26sp"
+            android:textColor="@color/design_default_color_on_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

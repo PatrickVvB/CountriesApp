@@ -8,6 +8,10 @@ import ru.test.countriesapp.db.CountryDatabase;
 
 public class App extends Application {
 
+    /*
+    * создание и получение экземпляра базы данных, создана тут,
+    * чтобы не передавать во view model application или context
+    */
     private static CountryDatabase INSTANCE;
 
     @Override

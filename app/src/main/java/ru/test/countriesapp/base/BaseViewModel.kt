@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseViewModel : ViewModel() {
 
+    //для вызова Toast из view model
     val toastObserver = MutableLiveData<String>()
 
     fun showToast(msg: String) {
