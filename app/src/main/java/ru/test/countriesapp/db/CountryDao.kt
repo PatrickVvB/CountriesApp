@@ -1,5 +1,6 @@
 package ru.test.countriesapp.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,8 +14,8 @@ interface CountryDao {
     fun insertCountry(country: Country)
 
     @Query("SELECT * FROM country WHERE name = :countryName")
-    fun getCountryByName(countryName: String): Country
+    fun getCountryByName(countryName: String): LiveData<Country>
 
     @Query("SELECT * FROM country ORDER BY name ASC")
-    fun getAllCountry(): ArrayList<Country>
+    fun getAllCountry(): LiveData<ArrayList<Country>>
 }
