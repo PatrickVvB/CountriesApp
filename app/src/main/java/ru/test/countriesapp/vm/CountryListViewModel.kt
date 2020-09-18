@@ -1,6 +1,5 @@
 package ru.test.countriesapp.vm
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +22,6 @@ class CountryListViewModel() : BaseViewModel() {
 
     //база данных
     val databaseCountries = databaseRep.getAllCountry
-    val newCountryList = MutableLiveData<ArrayList<Country>>()
 
     //вставка списка стран
     private fun insertCountry(countries: ArrayList<Country>) {
@@ -38,7 +36,6 @@ class CountryListViewModel() : BaseViewModel() {
             val response = countryListRep.getAllCountries()
             if (response.code() < 400) {
                 insertCountry(response.body()!!)//расчитывается что какие то данные ТОЧНО придут
-                newCountryList.value = response.body()
             }
             else showToast("Возникли проблемы с загрузкой стран, повторите попытку позже")
         }

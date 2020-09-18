@@ -11,7 +11,8 @@ class LanguageConverter {
 
     @TypeConverter
     fun fromCurrency(language: ArrayList<Language>): String {
-        return gson.toJson(language)
+        val type = object : TypeToken<List<Language>>() {}.type
+        return gson.toJson(language, type)
     }
 
     @TypeConverter

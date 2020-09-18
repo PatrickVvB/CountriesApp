@@ -34,8 +34,8 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
         return binding.root
     }
 
-    /*Проверка, если бд пуста, начинается загрузка из сети. Так же можно проверять на наличие интернета.
-    Пометка: databaseCountries всё время возвращает null :( Бд пуста, значит косяк со вставкой*/
+    /*Проверка, если бд пуста, начинается загрузка из сети.
+    Так же можно проверять на наличие интернета.*/
     private fun initCountryList() {
         vm.databaseCountries.value?.let {
             initRecycler(it as ArrayList<Country>)
@@ -51,19 +51,18 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
         }
     }
 
-    //не очень красиво... при получении нового списка или обновляет адаптер или устанавливает новый
+    //при получении нового списка или обновляет адаптер или устанавливает новый
     private fun initObserver() {
-        vm.newCountryList.observe(this, Observer {
+        vm.databaseCountries.observe(this, Observer {
             it?.let {
-                initRecycler(it)
+                initRecycler(it as ArrayList<Country>)
             } ?: return@Observer
         })
-        vm.newCountryList.value = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (checkVM())
-            vm.newCountryList.removeObservers(this)
+            vm.databaseCountries.removeObservers(this)
     }
 }

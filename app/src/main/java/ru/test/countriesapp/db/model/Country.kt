@@ -20,11 +20,11 @@ data class Country(
     @SerializedName("currencies")
     @Embedded
     @field:TypeConverters(CurrencyConverter::class)
-    val currency: ArrayList<Currency>,
+    val currency: ArrayList<Currency>?,
     @SerializedName("languages")
     @Embedded
     @field:TypeConverters(LanguageConverter::class)
-    val language: ArrayList<Language>,
+    val language: ArrayList<Language>?,
     @SerializedName("timezones")
     @field:TypeConverters(TimezoneConverter::class)
     val timeZone: ArrayList<String>
