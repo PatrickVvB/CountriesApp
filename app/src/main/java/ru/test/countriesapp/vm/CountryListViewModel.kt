@@ -26,9 +26,9 @@ class CountryListViewModel() : BaseViewModel() {
     val newCountryList = MutableLiveData<ArrayList<Country>>()
 
     //вставка списка стран
-    private fun insertCountry(country: ArrayList<Country>) {
+    private fun insertCountry(countries: ArrayList<Country>) {
         viewModelScope.launch(Dispatchers.IO) {
-            databaseRep.insert(country)
+            databaseRep.insert(countries)
         }
     }
 

@@ -10,8 +10,8 @@ import ru.test.countriesapp.db.model.Country
 @Dao
 interface CountryDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllCountry(country: List<Country>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE, entity = Country::class)
+    suspend fun insertAllCountry(country: List<Country>)
 
     @Query("SELECT * FROM country WHERE name = :countryName")
     fun getCountryByName(countryName: String): LiveData<Country>

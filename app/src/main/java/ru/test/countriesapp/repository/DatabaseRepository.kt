@@ -13,9 +13,4 @@ class DatabaseRepository(private val countryDao: CountryDao) {
     suspend fun insert(country: List<Country>) {
         countryDao.insertAllCountry(country)
     }
-
-    //получить страну по имени
-    suspend fun gerCountryByName(name: String): LiveData<Country> {
-        return countryDao.getCountryByName(name)
-    }
 }

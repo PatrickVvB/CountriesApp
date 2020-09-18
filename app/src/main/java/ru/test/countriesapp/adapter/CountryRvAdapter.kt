@@ -49,7 +49,7 @@ class CountryRvAdapter : RecyclerView.Adapter<CountryRvAdapter.VH>() {
                         .get(CountryInfoViewModel::class.java)
                 vm.country.value = country
                 fragment.setVM(vm)
-                (binding.root.context as MainActivity).addFragment(fragment)
+                (binding.root.context as MainActivity).addFragmentWithTag(fragment)
             }
         }
     }

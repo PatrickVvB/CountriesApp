@@ -8,8 +8,9 @@ import com.google.gson.annotations.SerializedName
 import ru.test.countriesapp.db.converters.CurrencyConverter
 import ru.test.countriesapp.db.converters.LanguageConverter
 import ru.test.countriesapp.db.converters.TimezoneConverter
+import java.io.Serializable
 
-@Entity
+@Entity(tableName = "country")
 data class Country(
     @PrimaryKey
     @SerializedName("name")
@@ -27,7 +28,7 @@ data class Country(
     @SerializedName("timezones")
     @field:TypeConverters(TimezoneConverter::class)
     val timeZone: ArrayList<String>
-)
+) : Serializable
 
 data class Currency(
     @SerializedName("code")
@@ -36,7 +37,7 @@ data class Currency(
     val name: String,
     @SerializedName("symbol")
     val symbol: String
-)
+) : Serializable
 
 data class Language(
     @SerializedName("name")
@@ -47,4 +48,4 @@ data class Language(
     val iso1: String,
     @SerializedName("iso639_2")
     val iso2: String
-)
+) : Serializable

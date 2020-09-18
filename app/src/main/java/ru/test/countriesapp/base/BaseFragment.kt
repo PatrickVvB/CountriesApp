@@ -13,6 +13,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         initToastObserver()
     }
 
+    fun checkVM(): Boolean = ::vm.isInitialized
+
     //слушатель тоста
     private fun initToastObserver() {
         vm.toastObserver.observe(this, Observer {
@@ -29,6 +31,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        vm.toastObserver.removeObservers(this)
+        if (checkVM())
+            vm.toastObserver.removeObservers(this)
     }
 }

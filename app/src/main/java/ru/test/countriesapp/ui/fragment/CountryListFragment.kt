@@ -26,18 +26,20 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_country_list, container, false)
-        vm = ViewModelProviders.of(this).get(CountryListViewModel::class.java)
+        if (!checkVM())
+            vm = ViewModelProviders.of(this).get(CountryListViewModel::class.java)
         initObserver()
         initCountryList()
         binding.tvBtnUpdateList.setOnClickListener { vm.getAllCountries() }
         return binding.root
     }
 
-    //проверка, если бд пуста, начинается загрузка из сети
+    /*Проверка, если бд пуста, начинается загрузка из сети. Так же можно проверять на наличие интернета.
+    Пометка: databaseCountries всё время возвращает null :( Бд пуста, значит косяк со вставкой*/
     private fun initCountryList() {
-        if (vm.databaseCountries.value == null)
-            vm.getAllCountries()
-        else initRecycler(vm.databaseCountries.value!! as ArrayList<Country>)
+        vm.databaseCountries.value?.let {
+            initRecycler(it as ArrayList<Country>)
+        } ?: vm.getAllCountries()
     }
 
     //установка recyclerview
@@ -53,7 +55,7 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
     private fun initObserver() {
         vm.newCountryList.observe(this, Observer {
             it?.let {
-                mAdapter?.notifyDataSetChanged() ?: initRecycler(it)
+                initRecycler(it)
             } ?: return@Observer
         })
         vm.newCountryList.value = null
@@ -61,6 +63,7 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        vm.newCountryList.removeObservers(this)
+        if (checkVM())
+            vm.newCountryList.removeObservers(this)
     }
 }
