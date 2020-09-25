@@ -15,7 +15,7 @@ import ru.test.countriesapp.vm.CountryInfoViewModel
 class CountryRvAdapter : RecyclerView.Adapter<CountryRvAdapter.VH>() {
 
     //пустой список стран
-    private var countries = emptyList<Country>()
+    private var countries = ArrayList<Country>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -32,7 +32,8 @@ class CountryRvAdapter : RecyclerView.Adapter<CountryRvAdapter.VH>() {
 
     //установка списка стран
     fun setCountryList(countries: ArrayList<Country>) {
-        this.countries = countries
+        this.countries.clear()
+        this.countries.addAll(countries)
         notifyDataSetChanged()
     }
 

@@ -33,11 +33,15 @@ class CountryListViewModel() : BaseViewModel() {
     //загрузка списка стран
     fun getAllCountries() {
         vmScope.launch {
-            val response = countryListRep.getAllCountries()
-            if (response.code() < 400) {
-                insertCountry(response.body()!!)//расчитывается что какие то данные ТОЧНО придут
+            try {
+                val response = countryListRep.getAllCountries()
+                if (response.code() < 400)
+                    insertCountry(response.body()!!)//расчитывается что какие то данные ТОЧНО придут
+                else
+                    showToast("Возникли проблемы с загрузкой стран, повторите попытку позже")
+            } catch (e: Exception) {
+                showToast("Нет доступа к интернету")
             }
-            else showToast("Возникли проблемы с загрузкой стран, повторите попытку позже")
         }
     }
 }

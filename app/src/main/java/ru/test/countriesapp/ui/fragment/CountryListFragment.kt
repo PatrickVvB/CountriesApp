@@ -29,24 +29,17 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
         if (!checkVM())
             vm = ViewModelProviders.of(this).get(CountryListViewModel::class.java)
         initObserver()
-        initCountryList()
+        initRecycler()
+        vm.getAllCountries()
         binding.tvBtnUpdateList.setOnClickListener { vm.getAllCountries() }
         return binding.root
     }
 
-    /*Проверка, если бд пуста, начинается загрузка из сети.
-    Так же можно проверять на наличие интернета.*/
-    private fun initCountryList() {
-        vm.databaseCountries.value?.let {
-            initRecycler(it as ArrayList<Country>)
-        } ?: vm.getAllCountries()
-    }
-
     //установка recyclerview
-    private fun initRecycler(countries: ArrayList<Country>) {
+    private fun initRecycler() {
         binding.rvCountries.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            mAdapter = CountryRvAdapter().apply { setCountryList(countries) }
+            mAdapter = CountryRvAdapter()
             adapter = mAdapter
         }
     }
@@ -55,7 +48,7 @@ class CountryListFragment : BaseFragment<CountryListViewModel>() {
     private fun initObserver() {
         vm.databaseCountries.observe(this, Observer {
             it?.let {
-                initRecycler(it as ArrayList<Country>)
+                mAdapter?.setCountryList(it as ArrayList<Country>)
             } ?: return@Observer
         })
     }
